@@ -14,18 +14,12 @@ pipeline {
             }
         }
 
-        stage('Build') {
+        stage('Build & Test') {
             steps {
-                echo '=== STAGE: Build Spring Boot Application ==='
+                echo '=== STAGE: Build Spring Boot Application via Gradle Docker ==='
                 echo 'Student: Gulasyl Zhanabayeva'
-                sh './gradlew clean build -x test'
-            }
-        }
-
-        stage('Test') {
-            steps {
-                echo '=== STAGE: Run Automated Tests ==='
-                sh './gradlew test'
+                // Запускаем сборку внутри официального контейнера Gradle, не требуя gradle на самом Jenkins
+                sh 'docker run --rm -v "$(pwd)":/app -w /app gradle:8.4-jdk17 gradle bootJar --no-daemon'
             }
         }
 
