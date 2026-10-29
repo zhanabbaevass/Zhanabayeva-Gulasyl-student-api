@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         IMAGE_NAME = 'zhanabayeva-gulasyl-student-api'
-        IMAGE_TAG = 'v1.0-gulasyl-zhanabayeva'
+        IMAGE_TAG  = 'v1.0-gulasyl-zhanabayeva'
     }
 
     stages {
@@ -16,32 +16,33 @@ pipeline {
 
         stage('Build & Test') {
             steps {
-                echo '=== STAGE: Build Spring Boot Application via Gradle Docker ==='
+                echo '=== STAGE: Build and test with Gradle ==='
                 echo 'Student: Gulasyl Zhanabayeva'
-                // Запускаем сборку внутри официального контейнера Gradle, не требуя gradle на самом Jenkins
-                sh 'docker run --rm -v "$(pwd)":/app -w /app gradle:8.4-jdk17 gradle bootJar --no-daemon'
+                sh 'docker run --rm --volumes-from $(hostname) -w "$PWD" gradle:8.4-jdk17 gradle test bootJar --no-daemon'
             }
         }
 
         stage('Docker Build') {
             steps {
-                echo '=== STAGE: Build Docker Image ==='
-                sh "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ."
+                echo '=== STAGE: Build Docker image ==='
+                sh 'docker build -t $IMAGE_NAME:$IMAGE_TAG .'
             }
         }
 
         stage('Verify') {
             steps {
-                echo '=== STAGE: Verify Docker Image ==='
-                sh "docker images | grep ${IMAGE_NAME}"
-                echo 'Pipeline completed successfully for Gulasyl Zhanabayeva!'
+                echo '=== STAGE: Verify image ==='
+                sh 'docker images | grep $IMAGE_NAME'
             }
         }
     }
 
     post {
+        success {
+            echo 'Pipeline succeeded! Student: Gulasyl Zhanabayeva'
+        }
         failure {
-            echo '❌ Pipeline failed! Please check the logs and fix the error.'
+            echo 'Pipeline failed! Please check the logs and fix the error.'
         }
     }
 }
