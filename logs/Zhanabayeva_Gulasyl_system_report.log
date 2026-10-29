@@ -1,0 +1,17 @@
+===== SYSTEM REPORT =====
+Student: Gulasyl Zhanabayeva
+Date and time: 2026-10-29 22:19:18
+User: user
+OS and kernel: MINGW64_NT-10.0-26200 ZhanabaevaGulasyl 3.6.6-1cdd4371.x86_64 2026-01-15 22:20 UTC x86_64 Msys
+--- CPU ---
+Cores: 8
+model name	: 11th Gen Intel(R) Core(TM) i5-1135G7 @ 2.40GHz
+--- Memory ---
+MemTotal:       16461240 kB
+MemFree:         3884972 kB
+--- Disk usage ---
+Filesystem            Size  Used Avail Use% Mounted on
+C:/Program Files/Git  476G  450G   27G  95% /
+--- Available disk space (current dir) ---
+Available: 27G
+
